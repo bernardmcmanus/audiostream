@@ -233,8 +233,8 @@ module.exports = function( grunt ) {
         'jshint',
         'defineBuildSrc',
         'clean:build',
-        //'git-describe',
-        //'createHash',
+        'git-describe',
+        'createHash',
         'createTemp',
         'concat:imports',
         'imports'
