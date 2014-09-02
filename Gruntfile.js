@@ -1,6 +1,9 @@
 module.exports = function( grunt ) {
 
 
+    var HTTPD_NODE_PORT = 8888;
+
+
     var httpd = require( 'httpd-node' );
     var fs = require( 'fs-extra' );
 
@@ -194,7 +197,7 @@ module.exports = function( grunt ) {
 
 
     grunt.registerTask( 'startServer' , function() {
-        var server = new httpd();
+        var server = new httpd({ port : HTTPD_NODE_PORT });
         server.setHttpDir( 'default' , '/' );
         server.start();
     });

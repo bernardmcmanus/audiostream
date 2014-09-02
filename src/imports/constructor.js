@@ -23,6 +23,7 @@ function AudioStream( url , options ) {
     that.busy = false;
 
     that.attemptedStart = 0;
+    that.startOffset = 0;
     that.lastTime = 0;
     that.elapsed = 0;
     that._timing = bind( that._timing , that );
@@ -74,7 +75,9 @@ function AudioStream( url , options ) {
 
     that.when([ STATE_CHANGE , UNLOCK ] , that );
 
-    that.load( NULL , url );
+    if (url) {
+        that.load( url );
+    }
 }
 
 

@@ -1,6 +1,6 @@
 AudioStream[PROTOTYPE] = MOJO.Create({
 
-    load: function( key , url , callback ) {
+    load: function( url , key , callback ) {
 
         key = key || 'main';
         callback = ensureFunction( callback );
@@ -154,7 +154,7 @@ AudioStream[PROTOTYPE] = MOJO.Create({
                     break;
 
                     case 3:
-                        that.happen( CONNECT );
+                        that.happen( CONNECT , that.startOffset );
                     break;
 
                     case 4:
@@ -180,6 +180,7 @@ AudioStream[PROTOTYPE] = MOJO.Create({
         var that = this;
         var source = that.source;
         if (that.playable && that.connected) {
+            that.startOffset = 0;
             source.disconnect( 0 );
             that._setState( 4 );
             that._stopTimer();
@@ -243,7 +244,8 @@ AudioStream[PROTOTYPE] = MOJO.Create({
                 }
 
                 if (that.playstate === 1) {
-                    that.happen( START , ( args[1] * 1000 ));
+                    that.startOffset = (args[1] * 1000);
+                    that.happen( START , that.startOffset );
                     that.playstate = 2;
                 }
 
@@ -298,6 +300,7 @@ AudioStream[PROTOTYPE] = MOJO.Create({
 
             that.elapsed = 0;
             that.attemptedStart = 0;
+            that.startOffset = 0;
 
             if (reinitialize) {
                 that.load();
@@ -319,6 +322,7 @@ AudioStream[PROTOTYPE] = MOJO.Create({
         var bufferSource = buffers[destroyKey] || new BufferSource( NULL , false );
 
         that.attemptedStart = 0;
+        that.startOffset = 0;
 
         if (key === that.key) {
             bufferSource.destroy( true );
