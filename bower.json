@@ -1,12 +1,12 @@
 {
     "name": "audiostream",
-    "version": "0.1.0",
+    "version": "0.1.1",
     "homepage": "https://github.com/elnarddogg/audiostream.git",
     "authors": [
         "Bernard McManus"
     ],
     "description": "High-level interface for the Web Audio API with compatibility hooks for iOS",
-    "main": "audiostream-0.1.0.min.js",
+    "main": "audiostream-0.1.1.min.js",
     "keywords": [
         "audio",
         "buffer",

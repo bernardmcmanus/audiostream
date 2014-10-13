@@ -4,7 +4,8 @@
     var AudioURL = 'audio/big_buck_bunny.' + (AudioStream.isIos() ? 'm4a' : 'mp3') + '?r=' + Date.now();
 
     var stream = new AudioStream( AudioURL , {
-        //waitForLock: false
+        //waitForLock: false,
+        loop: true
     })
     .once( 'ready' , function( e ) {
         //stream.play();

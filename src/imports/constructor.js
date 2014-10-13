@@ -16,6 +16,7 @@ function AudioStream( url , options ) {
 
     that.key = NULL;
     that.context = new AudioContext();
+    that.gainNode = that.context.createGain();
     that.sources = {};
     that.buffers = {};
     that[ STATE ] = 0;
@@ -44,6 +45,14 @@ function AudioStream( url , options ) {
                 if (that.key) {
                     that.sources[that.key] = value || NULL;
                 }
+            }
+        },
+        volume: {
+            get: function() {
+                return that.gainNode.gain.value;
+            },
+            set: function( value ) {
+                that.gainNode.gain.value = value;
             }
         },
         playable: {

@@ -1,4 +1,6 @@
 var NULL = null;
+var TIMING_INTERVAL = ( 1000 / 60 );
+var BUFFER_PAD = 10240;
 var PROTOTYPE = 'prototype';
 var LOADING = 'loading';
 var LOAD = 'load';

@@ -66,11 +66,7 @@ AudioStream[PROTOTYPE] = MOJO.Create({
 
         context.decodeAudioData( data , function( buffer ) {
             source.buffer = buffer;
-            source.loop = that.loop;
-            source.onended = function( e ) {
-                that.happen( END );
-                that.stop();
-            };
+            source.loop = true;
             that._setState( 2 );
             callback();
         });
@@ -168,9 +164,11 @@ AudioStream[PROTOTYPE] = MOJO.Create({
     connect: function() {
         var that = this;
         var source = that.source;
+        var gainNode = that.gainNode;
         var context = that.context;
         if (that.playable && !that.connected) {
-            source.connect( context.destination );
+            gainNode.connect( context.destination );
+            source.connect( gainNode );
             that._setState( 3 );
             that._startTimer();
         }
@@ -179,8 +177,10 @@ AudioStream[PROTOTYPE] = MOJO.Create({
     disconnect: function() {
         var that = this;
         var source = that.source;
+        var gainNode = that.gainNode;
         if (that.playable && that.connected) {
             that.startOffset = 0;
+            gainNode.disconnect( 0 );
             source.disconnect( 0 );
             that._setState( 4 );
             that._stopTimer();
@@ -201,12 +201,37 @@ AudioStream[PROTOTYPE] = MOJO.Create({
     },
 
     _timing: function( timestamp ) {
+        
         var that = this;
+        
         if (that.timerLoop) {
+
             if (that.connected && (!that.locked || !that.waitForLock)) {
+                
                 that.elapsed += (timestamp - (that.lastTime || timestamp));
+
+                if (that.elapsed >= (that.duration - TIMING_INTERVAL)) {
+                    
+                    that.elapsed = that.duration;
+
+                    var volume = that.volume;
+                    that.volume = 0;
+
+                    async(function() {
+                        that.happen( END );
+                        that.stop();
+                        that.volume = volume;
+                        if (that.loop) {
+                            that.once( READY , function() {
+                                that.play();
+                            });
+                        }
+                    });
+                }
+                
                 that.happen( TIMING , [ that.elapsed , that.progress , timestamp ]);
             }
+
             that.lastTime = timestamp;
             requestAnimationFrame( that._timing );
         }

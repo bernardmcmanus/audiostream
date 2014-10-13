@@ -1,8 +1,8 @@
 {
     "name": "audiostream",
-    "version": "0.1.0",
+    "version": "0.1.1",
     "description": "High-level interface for the Web Audio API with compatibility hooks for iOS",
-    "main": "audiostream-0.1.0.min.js",
+    "main": "audiostream-0.1.1.min.js",
     "devDependencies": {
         "fs-extra": "0.9.1",
         "httpd-node": "0.1.8",
