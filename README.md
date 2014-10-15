@@ -30,7 +30,7 @@ Events
 | load | Triggered when the XMLHttpRequest is complete | n/a |
 | ready | Triggered when the audio is ready to play | n/a |
 | connect | Triggered when the audiobuffer is connected to the device output | n/a |
-| disconnect | Triggered when the audiobuffer is disconnected to the device output | n/a |
+| disconnect | Triggered when the audiobuffer is disconnected from the device output | n/a |
 | timing | Triggered at 60hz while audio is playing | ```elapsed```<br>```percent``` |
 | start | Triggered when playback is started | ```offset``` |
 | end | Triggered when playback ends | n/a |
